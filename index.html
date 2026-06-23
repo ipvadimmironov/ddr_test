@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Кот и островки с цифрами</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="game-shell">
+      <canvas id="game" aria-label="Игра: кот прыгает на островки с цифрами"></canvas>
+
+      <section id="startScreen" class="panel panel--start">
+        <div class="badge">HTML + JS Gamepad Game</div>
+        <h1>Кот и островки</h1>
+        <p>
+          Слушай голос и прыгай на нужный островок. Управление: джойстик,
+          D-pad или стрелки клавиатуры.
+        </p>
+        <div class="panel-actions">
+          <button id="startButton" type="button">Начать игру</button>
+          <button id="settingsButton" class="button-secondary" type="button">Настроить джойстик</button>
+        </div>
+      </section>
+
+      <section id="settingsPanel" class="panel panel--settings hidden" aria-live="polite">
+        <div class="badge">Настройка</div>
+        <h2>Кнопки джойстика</h2>
+        <p id="settingsHint">Выбери направление, потом нажми нужную кнопку на джойстике.</p>
+        <div class="mapping-grid">
+          <button class="map-button" type="button" data-dir="up">
+            <span>Вверх</span>
+            <strong id="mapUp">Кнопка 12</strong>
+          </button>
+          <button class="map-button" type="button" data-dir="left">
+            <span>Влево</span>
+            <strong id="mapLeft">Кнопка 14</strong>
+          </button>
+          <button class="map-button" type="button" data-dir="right">
+            <span>Вправо</span>
+            <strong id="mapRight">Кнопка 15</strong>
+          </button>
+          <button class="map-button" type="button" data-dir="down">
+            <span>Вниз</span>
+            <strong id="mapDown">Кнопка 13</strong>
+          </button>
+        </div>
+        <div class="panel-actions panel-actions--compact">
+          <button id="closeSettingsButton" type="button">Готово</button>
+          <button id="resetMappingsButton" class="button-secondary" type="button">Сбросить</button>
+        </div>
+      </section>
+
+      <section id="messagePanel" class="panel panel--message hidden" aria-live="polite">
+        <h2 id="messageTitle"></h2>
+        <p id="messageText"></p>
+        <button id="restartButton" type="button">Играть снова</button>
+      </section>
+
+      <div class="hud">
+        <div class="hud-card">
+          <span>Очки</span>
+          <strong id="score">0</strong>
+        </div>
+        <div class="hud-card">
+          <span>Жизни</span>
+          <strong id="lives">♥♥♥</strong>
+        </div>
+        <div class="hud-card">
+          <span>Острова</span>
+          <strong><span id="round">0</span>/20</strong>
+        </div>
+      </div>
+
+      <div id="prompt" class="prompt">Нажми «Начать игру»</div>
+      <div id="gamepadStatus" class="gamepad-status">Джойстик: ожидание</div>
+    </main>
+
+    <script src="game.js"></script>
+  </body>
+</html>
