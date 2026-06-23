@@ -182,7 +182,7 @@
     }
 
     state.mode = "playing";
-    state.roundKind = Math.random() < 0.23 && state.solved > 1 ? "food" : "number";
+    state.roundKind = (state.solved + 1) % 3 === 0 ? "food" : "number";
     state.choices = directions.map((dir) => ({ dir, x: 0, y: 0, w: 0, h: 0, value: null, food: null }));
     layoutChoices();
 
@@ -308,7 +308,7 @@
       state.score += state.roundKind === "food" ? 25 : 10;
       state.solved += 1;
       state.streak += 1;
-      const praise = getPraisePhrase();
+      const praise = state.roundKind === "food" ? "Ой как вкусно" : getPraisePhrase();
       ui.prompt.textContent = praise;
       speak(praise);
       playTone(1046.5, 0.16, "triangle", 0.8);
@@ -982,16 +982,9 @@
     }
 
     if (state.settingsOpen || now - state.lastInputAt < 180) return;
-    const xAxis = pad.axes[0] || 0;
-    const yAxis = pad.axes[1] || 0;
-    const buttons = pad.buttons;
-    const mappedDirection = directions.find((dir) => buttons[state.buttonMap[dir]]?.pressed);
+    const mappedDirection = directions.find((dir) => state.buttonMap[dir] === justPressed);
 
     if (mappedDirection) handleDirection(mappedDirection);
-    else if (yAxis < -0.58) handleDirection("up");
-    else if (yAxis > 0.58) handleDirection("down");
-    else if (xAxis < -0.58) handleDirection("left");
-    else if (xAxis > 0.58) handleDirection("right");
   }
 
   function loop(now) {
